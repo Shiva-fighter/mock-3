@@ -4,118 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Games</title>
-    <style>
-        #contain{
-          
-           width: 95%;
-           height: 2000px;
-           display: flex;
-           flex-wrap: wrap;
-          
-        }
-        #img_pic
-        {
-            height: 200px;
-            width: 200px;
-        }
-    </style>
+    <title>Document</title>
 </head>
-<body id = "body">
-    <div id = "contain">
-
-    </div>
-    <div id = "pop_main_div">
+<body>
+    <div>
+        <input type="date" placeholder="start date" id = "s_date">
+        <input type="date" placeholder="end date" id = "e_date">
 
     </div>
 </body>
 </html>
 <script>
-    let container = document.getElementById("contain");
-    let pop_main_div = document.getElementById("pop_main_div");
-
-async function show(){
-         let res  = await fetch("https://www.balldontlie.io/api/v1/players");
+     var s_date = document.getElementById("s_date").value;
+        var e_date = document.getElementById("e_date").value;
+    async function show(){
+       
+        var url = `https://www.balldontlie.io/api/v1/games?start_date=${s_date}&end_date=${e_date}`;
+         let res  = await fetch(url);;
          let val = await res.json();
-         let arr = [];
-         arr.push(val.data);
         
-         showPlayer(arr);
+         
+        console.log(val);
+        // showPlayer(arr);
 
 }
 show()
-
-function showPlayer(playerList){
-   // console.log(playerList);
-    playerList.forEach((el)=>{
-        el.map(({id,first_name,position,team})=>{
-      // console.log(team.city);
-
-    let main_div = document.createElement("div");
-    
-
-    let div = document.createElement("div");
-   
-
-    let img = document.createElement("img");
-    img.src = "https://allworldpm.com/wp-content/uploads/2016/10/230x230-avatar-dummy-profile-pic-150x150.jpg"
-    document.getElementById('body').appendChild(img);
-    img.id = "img_pic"
-    
-
-    let f_name = document.createElement("p");
-    f_name.innerText = "first_name" + " => "+  first_name;
-
-    let pos = document.createElement("p");
-    pos.innerText = "position" +" => " +  position;
-
-    let btn = document.createElement("button");
-    btn.innerText = "Team Details";
-    
-    btn.addEventListener("click", function(){
-        showPopup(team);
-        
-    });
-   
-   
-
-
-    div.append(img,f_name,pos,btn);
-    main_div.append(div);
-    
-    container.append(main_div)
-        })  
-    })
-
-    function  showPopup(team_data){
-         console.log(team_data);
-       //  let pop_main_div = document.createElement("div");
-         let pop_div= document.createElement("div");
-
-         let t_name= document.createElement("p");
-         t_name.innerHTML = "Team" + " => " + team_data.full_name;
-
-         let abr_name= document.createElement("p");
-         abr_name.innerText = "Abbreviation" + " => " + team_data.abbreviation;
-
-         let con_name= document.createElement("p");
-         con_name.innerText = "Conference" + " => " + team_data.conference;
-
-         let div_name= document.createElement("p");
-         div_name.innerText = "Division" + " => " + team_data.division;
-
-         let city_name= document.createElement("p");
-         city_name.innerText = "City" + " => " + team_data.city;
-
-         pop_div.append(t_name ,abr_name, con_name,div_name, city_name);
-         
-         pop_main_div.append(pop_div);
-         
-
-    }
-
-    
-
-    
-}
 </script>
